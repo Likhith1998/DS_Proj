@@ -1,0 +1,6 @@
+com\distsys\projects\App.class
+com\distsys\projects\AirlineServer.class
+com\distsys\projects\utils\MySqlConn.class
+com\distsys\projects\utils\Configuration.class
+com\distsys\projects\AgencyServer.class
+com\distsys\projects\HotelServer.class
