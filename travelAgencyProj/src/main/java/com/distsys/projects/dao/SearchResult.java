@@ -1,31 +1,32 @@
 package com.distsys.projects.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchResult {
+public class SearchResult implements Serializable {
 
-    private List<FlightInfo> flightInfoList =  new ArrayList<>();
-    private List<HotelInfo> hotelInfoList = new ArrayList<>();
+    private List<FlightResultInfo> flightResultInfoList =  new ArrayList<>();
+    private List<HotelResultInfo> hotelResultInfoList = new ArrayList<>();
 
-    public SearchResult(List<FlightInfo> flightInfoList, List<HotelInfo> hotelInfoList) {
-        this.flightInfoList = flightInfoList;
-        this.hotelInfoList = hotelInfoList;
+    public SearchResult(List<FlightResultInfo> flightResultInfoList, List<HotelResultInfo> hotelResultInfoList) {
+        this.flightResultInfoList = flightResultInfoList;
+        this.hotelResultInfoList = hotelResultInfoList;
     }
 
-    public List<FlightInfo> getFlightInfoList() {
-        return flightInfoList;
+    public List<FlightResultInfo> getFlightResultInfoList() {
+        return flightResultInfoList;
     }
 
-    public void setFlightInfoList(List<FlightInfo> flightInfoList) {
-        this.flightInfoList = flightInfoList;
+    public void setFlightResultInfoList(List<FlightResultInfo> flightResultInfoList) {
+        this.flightResultInfoList = flightResultInfoList;
     }
 
-    public List<HotelInfo> getHotelInfoList() {
-        return hotelInfoList;
+    public List<HotelResultInfo> getHotelResultInfoList() {
+        return hotelResultInfoList;
     }
 
-    public void setHotelInfoList(List<HotelInfo> hotelInfoList) {
-        this.hotelInfoList = hotelInfoList;
+    public void setHotelResultInfoList(List<HotelResultInfo> hotelResultInfoList) {
+        this.hotelResultInfoList = hotelResultInfoList;
     }
 }

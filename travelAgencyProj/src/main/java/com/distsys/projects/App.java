@@ -40,5 +40,8 @@ public class App {
                 e.printStackTrace();
             }
         }
+        if( args[0].equals("client")){
+            new UserClient().run();
+        }
     }
 }
