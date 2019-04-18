@@ -17,8 +17,8 @@ public class AgencyServer {
     private String url;
     private String username;
     private String password;
-    private int port = 1234; // TODO : Take the port number from the config file
-    private static Vector<AgencyServerImpl> clientList = new Vector<>();
+    private int port = 1997; // TODO : Take the port number from the config file
+    private static Vector<AgencyServerThread> clientList = new Vector<>();
     private static int no_of_clients = 0;
     private static final String db_name = "agency_db";
 
@@ -53,7 +53,7 @@ public class AgencyServer {
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 
             System.out.println("Creating a new handler for this client...");
-            AgencyServerImpl mtch = new AgencyServerImpl(s,"client " + no_of_clients, ois, oos);
+            AgencyServerThread mtch = new AgencyServerThread(s,"client " + no_of_clients, ois, oos, clientList);
             Thread t = new Thread(mtch);
             System.out.println("Adding this client to active client list");
             clientList.add(mtch);

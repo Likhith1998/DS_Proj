@@ -48,10 +48,26 @@ public class HeartbeatAgent implements Runnable{
         }
         System.out.println("Heartbeat message sent to server ...");
 
-        ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
-        Message returnMessage = (Message) is.readObject();
+        ObjectInputStream is = null;
+        try {
+            is = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Message returnMessage = null;
+        try {
+            returnMessage = (Message) is.readObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println("return Message is=" + returnMessage);
-        socket.close();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

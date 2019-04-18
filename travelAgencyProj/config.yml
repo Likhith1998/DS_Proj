@@ -11,3 +11,8 @@ protocols:
 # Users
 users:
     katta: katta
+
+# Port Info :
+#     Agency server : 1997
+#     Airline server : 1998
+#     Hotel Server : 1999
