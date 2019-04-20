@@ -7,6 +7,9 @@ public class FlightResultInfo implements Serializable {
     private Integer airlineId;
     private Integer flightId;
     private String flightName;
+    private String source;
+    private String destination;
+    private Integer price;
 
     public FlightResultInfo(Integer airlineId, Integer flightId, String flightName, String source, String destination, Integer price) {
         this.airlineId = airlineId;
@@ -16,10 +19,6 @@ public class FlightResultInfo implements Serializable {
         this.destination = destination;
         this.price = price;
     }
-
-    private String source;
-    private String destination;
-    private Integer price;
 
     public Integer getAirlineId() {
         return airlineId;
@@ -67,5 +66,14 @@ public class FlightResultInfo implements Serializable {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public void printFlightResults(){
+        System.out.println("Airline Id : "+getAirlineId());
+        System.out.println("Flight Id : "+getFlightId());
+        System.out.println("Flight Name : "+getFlightName());
+        System.out.println("Source : "+getSource());
+        System.out.println("Destination : "+getDestination());
+        System.out.println("Price : "+getPrice());
     }
 }

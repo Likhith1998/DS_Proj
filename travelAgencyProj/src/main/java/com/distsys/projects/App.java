@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class App {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         if(args.length == 0){
             System.out.println("Give command line arguments");
             return;

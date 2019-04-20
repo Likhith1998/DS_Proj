@@ -47,4 +47,11 @@ public class HotelResultInfo implements Serializable {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    public void printHotelResults(){
+        System.out.println("Hotel Id : "+getHotelId());
+        System.out.println("Hotel Name : "+getHotelName());
+        System.out.println("Place : "+getPlace());
+        System.out.println("Price : "+getPrice());
+    }
 }

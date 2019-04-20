@@ -3,7 +3,7 @@ package com.distsys.projects.dao;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class QueryDetails implements Serializable {
+public class QueryDetails implements Serializable , Cloneable{
 
     private boolean toBook;
 
@@ -18,6 +18,88 @@ public class QueryDetails implements Serializable {
     private HotelBookingDetails hotelBookingDetails;
 
     private TripBookingDetails tripBookingDetails;
+
+    private boolean connClose;
+    private String message;
+    private Integer numOfSeats;
+    private Integer flightId;
+    private String serverType;
+    private Integer bookingId;
+    private Integer bookingId2;
+    private boolean sameAirline;
+
+    public QueryDetails(){
+        connClose=false;
+        sameAirline=false;
+    }
+
+    public boolean isConnClose() {
+        return connClose;
+    }
+
+    public void setConnClose(boolean disconnect) {
+        this.connClose = disconnect;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
+
+
+
+
+    public void setServerType(String type){
+        serverType=type;
+    }
+    public String getServerType(){
+        return serverType;
+    }
+
+    public void setAirlineQuery(Integer fId, Integer n){
+        numOfSeats=n;
+        flightId=fId;
+    }
+
+    public String printAirlineQuery(){
+        return "Flight ID : " +flightId + " ||  Num of Seats : " + numOfSeats;
+    }
+
+    public void setBookingId(Integer bID){
+        bookingId=bID;
+    }
+
+    public Integer getBookingId(){
+        return bookingId;
+    }
+    public void setBookingId2(Integer bID){
+        bookingId2=bID;
+    }
+
+    public Integer getBookingId2(){
+        return bookingId2;
+    }
+    public Integer getSeats(){
+        return numOfSeats;
+    }
+    public Integer getFlightId(){
+        return flightId;
+    }
+
+
+    public void setSameAirline(boolean sa){
+        sameAirline=sa;
+    }
+    public boolean getSameAirline(){
+        return sameAirline;
+    }
+
+
 
     public void setToBook(boolean toBook) {
         this.toBook = toBook;
@@ -91,5 +173,22 @@ public class QueryDetails implements Serializable {
     public void setTripBookingDetails(Integer userId, Integer goingFlightId, Integer returnFlightId, Integer no_of_passengers,Integer no_of_days, Integer[] hotelIds)
     {
         TripBookingDetails tripBookingDetails = new TripBookingDetails(userId,goingFlightId, returnFlightId, no_of_passengers, no_of_days, hotelIds);
+    }
+
+    public void printQueryDetails()
+    {
+        System.out.println("toBook : " + toBook);
+        System.out.println("flightandhotel : " + flightAndHotel);
+        System.out.println("flightonly : " + flightOnly);
+        System.out.println("hotelonly : " + hotelOnly);
+        if(flightDetails!=null)
+            System.out.println(flightDetails.toString());
+        if(hotelDetails!=null)
+            System.out.println(hotelDetails.toString());
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

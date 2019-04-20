@@ -1,6 +1,8 @@
 package com.distsys.projects.dao;
 
-public class HotelBookingDetails {
+import java.io.Serializable;
+
+public class HotelBookingDetails implements Serializable {
     private Integer user_id;
     private Integer hotelId;
     private Integer no_of_rooms;

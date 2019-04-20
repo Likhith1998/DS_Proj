@@ -23,7 +23,7 @@ public class AgencyServer {
     private int port = 9997; // TODO : Take the port number from the config file
     private static Vector<AgencyServerThread> clientList = new Vector<>();
     private static int no_of_clients = 0;
-    private static final String db_name = "agency_db";
+    private static final String db_name = "dsproj";
 
     public void runServer(String type, Configuration config) throws IOException{
 
@@ -65,35 +65,12 @@ public class AgencyServer {
         }
     }
 
-    public void runserver() throws IOException, InterruptedException {
-        System.out.println("Agency Server Running on port 9997");
-        ServerSocket ss = new ServerSocket(port);
-        Socket s;
-
-//        while (true) {
-            s = ss.accept();
-            System.out.println("New client request received : " + s);
-
-            ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-            ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-
-            System.out.println("Creating a new handler for this client...");
-            AgencyServerThread mtch = new AgencyServerThread(s, "client " + no_of_clients, ois, oos, clientList);
-            Thread t = new Thread(mtch);
-            System.out.println("Adding this client to active client list");
-            clientList.add(mtch);
-            t.start();
-            no_of_clients++;
-            t.join();
-//        }
-    }
-
     private boolean testConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con= DriverManager.getConnection(url+db_name,username,password);
             Statement stmt=con.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from agency_info");
+            ResultSet rs=stmt.executeQuery("select * from userinfo");
             // TODO : Instead of running a Query, Find a trick to just check connection to DB
             while(rs.next()){}
             con.close();
@@ -131,7 +108,8 @@ class AgencyServerThread implements Runnable {
         try {
             System.out.println("Got here ... Yay");
             queryDetails = (QueryDetails) ois.readObject();
-            System.out.println("Got query details "+queryDetails);
+            System.out.println("Got query details ");
+            queryDetails.printQueryDetails();
 
             if(queryDetails.isToBook() == false){
                 if(queryDetails.isFlightAndHotel() == false){
@@ -146,6 +124,7 @@ class AgencyServerThread implements Runnable {
                         }
                         System.out.println("Server connected");
                         SearchResult searchResult = new SendReceiveUtil<SearchResult>().sendAndRecieve(socket,queryDetails);
+                        searchResult.printSearchResult();
                         oos.writeObject(searchResult);
                         ois.close();
                         oos.close();
@@ -198,6 +177,13 @@ class AgencyServerThread implements Runnable {
                 }
             }
             //TODO : Booking
+            else {
+                AtomicCommit atc = new AtomicCommit();
+                atc.setServer(1,"127.0.0.1",9998);
+                atc.setServer(2,"127.0.0.1",9999);
+//                atc.setServer(3,"127.0.0.1",7777);
+                atc.commit(2, queryDetails);
+            }
 
         }catch (IOException e) {
             e.printStackTrace();

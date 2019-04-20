@@ -1,6 +1,8 @@
 package com.distsys.projects.dao;
 
-public class TripBookingDetails {
+import java.io.Serializable;
+
+public class TripBookingDetails implements Serializable {
     private Integer userId;
     private Integer goingFlightId;
     private Integer returnFlightId;

@@ -7,6 +7,7 @@ import com.distsys.projects.utils.SendReceiveUtil;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.Scanner;
 
 public class UserClient {
@@ -16,25 +17,33 @@ public class UserClient {
 
     public UserClient(){
         //TODO : take agency server IP from config file
-        this.agencyIP = "127.0.0.1";
+        this.agencyIP = "10.145.181.84";
         this.agencyPort = 9997;
     }
 
     // Testing purposes
-    public QueryDetails getDummyDetails(){
+    public QueryDetails getDummyDetails() throws ParseException {
         QueryDetails queryDetails = new QueryDetails();
-        queryDetails.setToBook(false);
-        queryDetails.setFlightAndHotel(false);
-        queryDetails.setFlightOnly(true);
-        String dep="2015-03-31";
-        String ret="2015-03-1";
+        queryDetails.setToBook(true);
+        queryDetails.setFlightAndHotel(true);
+        queryDetails.setFlightOnly(false);
+        String dep="2019-04-10";
+        String ret="2019-04-13";
         Date depDate = Date.valueOf(dep);
         Date retDate = Date.valueOf(ret);
-        queryDetails.setFlightDetails("hi","hi",depDate,retDate,5);
+        queryDetails.setFlightDetails("Port1","Port2",depDate,retDate,2);
+        String from="2019-04-11";
+        Date fromDate = Date.valueOf(from);
+        queryDetails.setHotelDetails("Port2",fromDate,fromDate,1);
         return queryDetails;
     }
     public void run(){
         userInput();
+    }
+
+    public void testrun() throws ParseException {
+        QueryDetails queryDetails = getDummyDetails();
+        book(queryDetails);
     }
 
     public void userInput(){
@@ -80,6 +89,7 @@ public class UserClient {
                     details.setHotelOnly(true);
                     System.out.println("Enter the hotel details :::  ");
                     System.out.println("1: City ");
+                    in.nextLine();
                     String city = in.nextLine();
                     System.out.println("2: From Date ");
                     String fromDatestr = in.nextLine();
@@ -193,7 +203,7 @@ public class UserClient {
             System.out.println("Cannot find any results");
             return;
         }
-        System.out.println(searchResult);
+        searchResult.printSearchResult();
         try {
             socket.close();
         } catch (IOException e) {
@@ -202,7 +212,26 @@ public class UserClient {
     }
 
     public void book(QueryDetails queryDetails){
-
+        Socket socket;
+        try {
+            socket = new Socket(agencyIP,agencyPort);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Cannot find host with the IP "+agencyIP+" and port "+agencyPort);
+            return;
+        }
+        System.out.println("Server connected");
+        SearchResult searchResult = new SendReceiveUtil<SearchResult>().sendAndRecieve(socket, queryDetails);
+        if(searchResult == null){
+            System.out.println("Cannot find any results");
+            return;
+        }
+        searchResult.printSearchResult();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

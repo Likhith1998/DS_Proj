@@ -32,4 +32,15 @@ public class HotelQueryDetails implements Serializable {
     public Integer getNo_of_rooms() {
         return no_of_rooms;
     }
+
+    @Override
+    public String toString() {
+        return "HotelQueryDetails{" +
+                "city='" + city + '\'' +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                ", no_of_rooms=" + no_of_rooms +
+                '}';
+    }
+
 }

@@ -38,4 +38,15 @@ public class FlightQueryDetails implements Serializable {
     public Integer getNo_of_seats() {
         return no_of_seats;
     }
+
+    @Override
+    public String toString() {
+        return "FlightQueryDetails{" +
+                "origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", departing=" + departing +
+                ", returning=" + returning +
+                ", no_of_seats=" + no_of_seats +
+                '}';
+    }
 }
